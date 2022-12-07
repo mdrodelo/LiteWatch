@@ -5,6 +5,7 @@ from .forms import NewSearchForm, UserRegisterForm
 from .models import Search, Result
 from django.contrib.auth.models import User
 from .crawl import test_search
+from .cron import trigger
 
 # Create your views here.
 
@@ -51,6 +52,7 @@ def index(request):
                 the_form = form.save(commit=False)
                 the_form.user_id = request.user.id
                 the_form.save()
+                trigger()
         return HttpResponseRedirect('/')
 
     if request.user.is_authenticated:
